@@ -25,9 +25,9 @@ export async function POST(req: NextRequest) {
         }
       });
     } catch (error: any) {
-      console.error('Error generating custom audio:', JSON.stringify(error.response.data));
-      if (error.response.status === 402) {
-        return new NextResponse(JSON.stringify({ error: error.response.data.detail }), {
+      console.error('Error generating custom audio:', error.message);
+      if (error.status === 402) {
+        return new NextResponse(JSON.stringify({ error: error.message }), {
           status: 402,
           headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
           }
         });
       }
-      return new NextResponse(JSON.stringify({ error: 'Internal server error: ' + JSON.stringify(error.response.data.detail) }), {
+      return new NextResponse(JSON.stringify({ error: 'Internal server error: ' + (error.message) }), {
         status: 500,
         headers: {
           'Content-Type': 'application/json',
